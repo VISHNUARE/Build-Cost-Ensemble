@@ -1,0 +1,263 @@
+{% extends "build/base.html" %}
+
+{% block title %}
+Dashboard | BuildPro
+{% endblock %}
+
+{% block page_heading %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<section class="page-content">
+
+    <div class="welcome-section">
+
+        <div>
+            <span class="eyebrow">
+                MANAGEMENT OVERVIEW
+            </span>
+
+            <h1>
+                Welcome back,
+                {{ request.user.username }}!
+            </h1>
+
+            <p>
+                Manage your buildings and monitor
+                their current status from one place.
+            </p>
+        </div>
+
+        <a
+            href="{% url 'add_building' %}"
+            class="primary-button"
+        >
+            ＋ Add Building
+        </a>
+
+    </div>
+
+
+    <div class="stats-grid">
+
+        <div class="stat-card purple">
+
+            <div class="stat-icon">
+                ▦
+            </div>
+
+            <div>
+                <span>Total Buildings</span>
+                <strong>{{ total }}</strong>
+            </div>
+
+        </div>
+
+
+        <div class="stat-card green">
+
+            <div class="stat-icon">
+                ✓
+            </div>
+
+            <div>
+                <span>Active</span>
+                <strong>{{ active }}</strong>
+            </div>
+
+        </div>
+
+
+        <div class="stat-card orange">
+
+            <div class="stat-icon">
+                ◷
+            </div>
+
+            <div>
+                <span>Maintenance</span>
+                <strong>{{ maintenance }}</strong>
+            </div>
+
+        </div>
+
+
+        <div class="stat-card red">
+
+            <div class="stat-icon">
+                !
+            </div>
+
+            <div>
+                <span>Inactive</span>
+                <strong>{{ inactive }}</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="section-card">
+
+        <div class="section-header">
+
+            <div>
+                <h2>Building Records</h2>
+
+                <p>
+                    All registered buildings
+                </p>
+            </div>
+
+            <span class="record-count">
+                {{ total }} Records
+            </span>
+
+        </div>
+
+
+        {% if buildings %}
+
+        <div class="building-grid">
+
+            {% for building in buildings %}
+
+            <article class="building-item">
+
+                <div class="building-item-top">
+
+                    <div class="building-icon">
+                        B
+                    </div>
+
+                    {% if building.status == "Active" %}
+
+                    <span class="status-badge active">
+                        Active
+                    </span>
+
+                    {% elif building.status == "Maintenance" %}
+
+                    <span class="status-badge maintenance">
+                        Maintenance
+                    </span>
+
+                    {% else %}
+
+                    <span class="status-badge inactive">
+                        Inactive
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <h3>
+                    {{ building.name }}
+                </h3>
+
+
+                {% if building.location %}
+
+                <p class="location">
+                    ⌖ {{ building.location }}
+                </p>
+
+                {% else %}
+
+                <p class="location">
+                    Location not provided
+                </p>
+
+                {% endif %}
+
+
+                {% if building.description %}
+
+                <p class="description">
+                    {{ building.description|truncatechars:100 }}
+                </p>
+
+                {% endif %}
+
+
+                <div class="building-footer">
+
+                    <small>
+                        Created
+                        {{ building.created_at|date:"d M Y" }}
+                    </small>
+
+                    <div class="action-buttons">
+
+                        <a
+                            href="{% url 'building_detail' building.id %}"
+                            class="icon-button view"
+                            title="View"
+                        >
+                            View
+                        </a>
+
+                        <a
+                            href="{% url 'edit_building' building.id %}"
+                            class="icon-button edit"
+                            title="Edit"
+                        >
+                            Edit
+                        </a>
+
+                        <a
+                            href="{% url 'delete_building' building.id %}"
+                            class="icon-button delete"
+                            title="Delete"
+                        >
+                            Delete
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                B
+            </div>
+
+            <h3>
+                No buildings yet
+            </h3>
+
+            <p>
+                Add your first building to start
+                managing your records.
+            </p>
+
+            <a
+                href="{% url 'add_building' %}"
+                class="primary-button"
+            >
+                ＋ Add First Building
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

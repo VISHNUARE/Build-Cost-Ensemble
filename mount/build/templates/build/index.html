@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BuildPro | Building Management</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #111827;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 72px;
+            background: rgba(255,255,255,0.96);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            color: #4f46e5;
+        }
+
+        .logo span {
+            color: #111827;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #374151;
+            font-weight: 600;
+            transition: 0.25s;
+        }
+
+        .nav-links a:hover {
+            color: #4f46e5;
+        }
+
+        .login-btn {
+            background: #4f46e5;
+            color: white !important;
+            padding: 11px 22px;
+            border-radius: 9px;
+            box-shadow: 0 5px 15px rgba(79,70,229,0.25);
+        }
+
+        .login-btn:hover {
+            background: #3730a3;
+            transform: translateY(-1px);
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 620px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+            padding: 80px 8%;
+            background:
+                radial-gradient(circle at 85% 20%, rgba(99,102,241,0.18), transparent 30%),
+                linear-gradient(135deg, #eef2ff, #ffffff);
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 15px;
+            background: #e0e7ff;
+            color: #4338ca;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            line-height: 1.1;
+            margin-bottom: 22px;
+            color: #111827;
+        }
+
+        .hero h1 span {
+            color: #4f46e5;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #6b7280;
+            margin-bottom: 32px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: #4f46e5;
+            color: white;
+            text-decoration: none;
+            border-radius: 9px;
+            font-weight: 700;
+            box-shadow: 0 10px 25px rgba(79,70,229,0.25);
+            transition: 0.25s;
+        }
+
+        .hero-btn:hover {
+            background: #3730a3;
+            transform: translateY(-2px);
+        }
+
+        .secondary-btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: white;
+            color: #374151;
+            text-decoration: none;
+            border: 1px solid #d1d5db;
+            border-radius: 9px;
+            font-weight: 700;
+            transition: 0.25s;
+        }
+
+        .secondary-btn:hover {
+            border-color: #4f46e5;
+            color: #4f46e5;
+        }
+
+        /* ================= HERO CARD ================= */
+
+        .hero-visual {
+            width: 450px;
+            min-width: 450px;
+        }
+
+        .building-card {
+            background: white;
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0 25px 60px rgba(31,41,55,0.15);
+        }
+
+        .building-top {
+            height: 220px;
+            border-radius: 18px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(79,70,229,0.95),
+                    rgba(99,102,241,0.75)
+                );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            margin-bottom: 20px;
+        }
+
+        .building-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .building-info h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .building-info p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .status {
+            padding: 7px 12px;
+            background: #dcfce7;
+            color: #15803d;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* ================= FEATURES ================= */
+
+        .features {
+            padding: 90px 8%;
+            text-align: center;
+            background: white;
+        }
+
+        .features h2 {
+            font-size: 38px;
+            margin-bottom: 12px;
+        }
+
+        .section-text {
+            color: #6b7280;
+            margin-bottom: 50px;
+            font-size: 17px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 35px 28px;
+            border-radius: 18px;
+            border: 1px solid #eef0f5;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.10);
+        }
+
+        .card-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eef2ff;
+            border-radius: 16px;
+            font-size: 32px;
+        }
+
+        .card h3 {
+            margin-bottom: 12px;
+            font-size: 21px;
+        }
+
+        .card p {
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        /* ================= ABOUT ================= */
+
+        .about {
+            padding: 90px 8%;
+            background: #f8fafc;
+            text-align: center;
+        }
+
+        .about h2 {
+            font-size: 38px;
+            margin-bottom: 20px;
+        }
+
+        .about p {
+            max-width: 750px;
+            margin: auto;
+            color: #6b7280;
+            line-height: 1.8;
+            font-size: 17px;
+        }
+
+        /* ================= CONTACT ================= */
+
+        .contact {
+            padding: 80px 8%;
+            background: white;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .contact p {
+            color: #6b7280;
+            margin-bottom: 25px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        footer p {
+            color: #9ca3af;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 900px) {
+
+            .navbar {
+                padding: 0 5%;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                width: 100%;
+                min-width: 0;
+                max-width: 450px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .nav-links li:not(:last-child) {
+                display: none;
+            }
+
+            .hero {
+                padding: 60px 5%;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .building-top {
+                height: 180px;
+                font-size: 75px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        Build<span>Pro</span>
+    </div>
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="#home">Home</a>
+        </li>
+
+        <li>
+            <a href="#about">About</a>
+        </li>
+
+        <li>
+            <a href="#services">Services</a>
+        </li>
+
+        <li>
+            <a href="#contact">Contact</a>
+        </li>
+
+        <li>
+            <a href="{% url 'login' %}" class="login-btn">
+                Login
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <div class="badge">
+            PROFESSIONAL BUILDING MANAGEMENT
+        </div>
+
+        <h1>
+            Manage Your
+            <span>Buildings</span>
+            Smarter
+        </h1>
+
+        <p>
+            A professional platform to manage building
+            information, locations, status, descriptions
+            and records from one secure dashboard.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="{% url 'login' %}" class="hero-btn">
+                Get Started →
+            </a>
+
+            <a href="#services" class="secondary-btn">
+                Explore Features
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-visual">
+
+        <div class="building-card">
+
+            <div class="building-top">
+                🏢
+            </div>
+
+            <div class="building-info">
+
+                <div>
+                    <h3>Building Management</h3>
+                    <p>Simple • Secure • Professional</p>
+                </div>
+
+                <div class="status">
+                    ACTIVE
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FEATURES ================= -->
+
+<section class="features" id="services">
+
+    <h2>Everything You Need</h2>
+
+    <p class="section-text">
+        Powerful tools for managing your building information.
+    </p>
+
+
+    <div class="cards">
+
+        <div class="card">
+
+            <div class="card-icon">
+                🏢
+            </div>
+
+            <h3>Building Management</h3>
+
+            <p>
+                Add, edit and manage building records
+                from a single professional dashboard.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                🔒
+            </div>
+
+            <h3>Secure Login</h3>
+
+            <p>
+                Secure authentication keeps your
+                management dashboard protected.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                📊
+            </div>
+
+            <h3>Dashboard</h3>
+
+            <p>
+                View your building records, statuses
+                and important information at a glance.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section class="about" id="about">
+
+    <h2>About BuildPro</h2>
+
+    <p>
+        BuildPro is designed to provide a clean and
+        professional way to organize building information.
+        After signing in, users can access their dashboard,
+        add new buildings, update existing records,
+        remove records and manage their information.
+    </p>
+
+</section>
+
+
+<!-- ================= CONTACT ================= -->
+
+<section class="contact" id="contact">
+
+    <h2>Ready to Get Started?</h2>
+
+    <p>
+        Sign in to access your building management dashboard.
+    </p>
+
+    <a href="{% url 'login' %}" class="hero-btn">
+        Login to Dashboard
+    </a>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <strong>BuildPro</strong>
+
+    <p>
+        © 2026 BuildPro. All rights reserved.
+    </p>
+
+</footer>
+
+</body>
+</html>

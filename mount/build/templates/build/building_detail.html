@@ -1,0 +1,182 @@
+{% extends "build/base.html" %}
+
+{% block title %}
+{{ building.name }} | BuildPro
+{% endblock %}
+
+{% block page_title %}
+Building Details
+{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+
+    <div>
+
+        <span class="eyebrow">
+            BUILDING
+        </span>
+
+        <h1>
+            {{ building.name }}
+        </h1>
+
+        <p>
+            View complete building information.
+        </p>
+
+    </div>
+
+    <div class="heading-actions">
+
+        <a href="{% url 'edit_building' building.id %}"
+           class="btn btn-primary">
+
+            Edit Building
+
+        </a>
+
+        <a href="{% url 'dashboard' %}"
+           class="btn btn-secondary">
+
+            Back
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="detail-grid">
+
+    <div class="detail-main">
+
+        <div class="detail-card">
+
+            <div class="detail-card-header">
+
+                <div class="detail-building-icon">
+                    {{ building.name|first|upper }}
+                </div>
+
+                <div>
+
+                    <h2>
+                        {{ building.name }}
+                    </h2>
+
+                    <p>
+                        Building #{{ building.id }}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="detail-info-grid">
+
+                <div class="detail-item">
+
+                    <span>
+                        Location
+                    </span>
+
+                    <strong>
+                        {{ building.location|default:"Not specified" }}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span>
+                        Status
+                    </span>
+
+                    <strong>
+
+                        <span class="status-badge status-{{ building.status|lower }}">
+                            {{ building.status }}
+                        </span>
+
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span>
+                        Created
+                    </span>
+
+                    <strong>
+                        {{ building.created_at|date:"d M Y, H:i" }}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span>
+                        Last Updated
+                    </span>
+
+                    <strong>
+                        {{ building.updated_at|date:"d M Y, H:i" }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="description-section">
+
+                <h3>
+                    Description
+                </h3>
+
+                <p>
+                    {{ building.description|default:"No description provided."|linebreaksbr }}
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="detail-side">
+
+        <div class="quick-card">
+
+            <h3>
+                Quick Actions
+            </h3>
+
+            <a href="{% url 'edit_building' building.id %}">
+                Edit Building
+            </a>
+
+            <a href="{% url 'delete_building' building.id %}">
+                Delete Building
+            </a>
+
+            <a href="{% url 'dashboard' %}">
+                Return to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

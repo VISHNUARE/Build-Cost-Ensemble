@@ -1,0 +1,139 @@
+{% extends "build/base.html" %}
+
+{% block title %}
+Add Building | BuildPro
+{% endblock %}
+
+{% block page_heading %}
+Add Building
+{% endblock %}
+
+{% block content %}
+
+<section class="page-content">
+
+    <div class="form-page-header">
+
+        <div>
+            <span class="eyebrow">
+                BUILDING MANAGEMENT
+            </span>
+
+            <h1>
+                Add New Building
+            </h1>
+
+            <p>
+                Enter the building information below.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="form-card">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="form-grid">
+
+                <div class="form-group full">
+
+                    <label>
+                        Building Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter building name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Location
+                    </label>
+
+                    <input
+                        type="text"
+                        name="location"
+                        placeholder="Enter location"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Status
+                    </label>
+
+                    <select name="status">
+
+                        <option value="Active">
+                            Active
+                        </option>
+
+                        <option value="Maintenance">
+                            Maintenance
+                        </option>
+
+                        <option value="Inactive">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Description
+                    </label>
+
+                    <textarea
+                        name="description"
+                        rows="6"
+                        placeholder="Enter building description"
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <a
+                    href="{% url 'dashboard' %}"
+                    class="secondary-button"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    Save Building
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

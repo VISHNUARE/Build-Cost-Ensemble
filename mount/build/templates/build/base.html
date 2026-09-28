@@ -1,0 +1,183 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}BuildPro{% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'build/style.css' %}"
+    >
+
+</head>
+
+<body>
+
+<div class="app-background">
+
+    {% if request.user.is_authenticated %}
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">BP</div>
+
+            <div>
+                <div class="brand-name">BuildPro</div>
+                <div class="brand-subtitle">
+                    Management System
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-label">
+            MAIN MENU
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a
+                href="{% url 'dashboard' %}"
+                class="menu-item"
+            >
+                <span class="menu-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a
+                href="{% url 'add_building' %}"
+                class="menu-item"
+            >
+                <span class="menu-icon">＋</span>
+                <span>Add Building</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="user-card">
+
+                <div class="user-avatar">
+                    {{ request.user.username|first|upper }}
+                </div>
+
+                <div class="user-details">
+                    <strong>
+                        {{ request.user.username }}
+                    </strong>
+
+                    <small>
+                        Administrator
+                    </small>
+                </div>
+
+            </div>
+
+            <a
+                href="{% url 'logout' %}"
+                class="logout-link"
+            >
+                <span>↪</span>
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+    {% endif %}
+
+
+    <main
+        class="{% if request.user.is_authenticated %}main-content{% else %}full-content{% endif %}"
+    >
+
+        {% if request.user.is_authenticated %}
+
+        <header class="topbar">
+
+            <div>
+                <span class="topbar-label">
+                    BUILDPRO
+                </span>
+
+                <h2>
+                    {% block page_heading %}
+                    Dashboard
+                    {% endblock %}
+                </h2>
+            </div>
+
+            <div class="topbar-user">
+
+                <div class="topbar-avatar">
+                    {{ request.user.username|first|upper }}
+                </div>
+
+                <div>
+                    <strong>
+                        {{ request.user.username }}
+                    </strong>
+
+                    <small>
+                        Online
+                    </small>
+                </div>
+
+            </div>
+
+        </header>
+
+        {% endif %}
+
+
+        {% if messages %}
+
+        <div class="messages-container">
+
+            {% for message in messages %}
+
+            <div class="message message-{{ message.tags }}">
+
+                <span>
+                    {% if message.tags == "success" %}
+                        ✓
+                    {% else %}
+                        !
+                    {% endif %}
+                </span>
+
+                {{ message }}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

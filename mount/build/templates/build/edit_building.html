@@ -1,0 +1,149 @@
+{% extends "build/base.html" %}
+
+{% block title %}
+Edit Building | BuildPro
+{% endblock %}
+
+{% block page_title %}
+Edit Building
+{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+
+    <div>
+
+        <span class="eyebrow">
+            BUILDING MANAGEMENT
+        </span>
+
+        <h1>
+            Edit Building
+        </h1>
+
+        <p>
+            Update information for {{ building.name }}.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="form-card">
+
+    {% if error %}
+
+    <div class="alert alert-error">
+        {{ error }}
+    </div>
+
+    {% endif %}
+
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+
+        <div class="form-grid">
+
+            <div class="form-group full">
+
+                <label>
+                    Building Name
+                </label>
+
+                <input
+                    type="text"
+                    name="name"
+                    value="{{ building.name }}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Location
+                </label>
+
+                <input
+                    type="text"
+                    name="location"
+                    value="{{ building.location }}"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Status
+                </label>
+
+                <select name="status">
+
+                    <option value="Active"
+                        {% if building.status == "Active" %}selected{% endif %}>
+                        Active
+                    </option>
+
+                    <option value="Maintenance"
+                        {% if building.status == "Maintenance" %}selected{% endif %}>
+                        Maintenance
+                    </option>
+
+                    <option value="Inactive"
+                        {% if building.status == "Inactive" %}selected{% endif %}>
+                        Inactive
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>
+                    Description
+                </label>
+
+                <textarea
+                    name="description"
+                    rows="6"
+                >{{ building.description }}</textarea>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <a href="{% url 'building_detail' building.id %}"
+               class="btn btn-secondary">
+
+                Cancel
+
+            </a>
+
+            <button type="submit"
+                    class="btn btn-primary">
+
+                Save Changes
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
